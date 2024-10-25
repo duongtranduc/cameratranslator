@@ -62,7 +62,7 @@ workflows:
         BUNDLE_ID: "com.voiceandcameratranslator"
         XCODE_WORKSPACE: "voiceandcameratranslator.xcworkspace"
         XCODE_SCHEME: "voiceandcameratranslator"
-        APP_STORE_APPLE_ID: 6736975940
+        APP_STORE_APPLE_ID: 6737214179
     scripts:
       - name: Install npm dependencies
         script: | 
@@ -98,7 +98,7 @@ workflows:
           - duongtranduc@gmail.com
         notify:
           success: true
-          failure: true
+          failure: false
       app_store_connect:
         auth: integration
 
