@@ -5,4 +5,7 @@
     "android_app_id": "ca-app-pub-5904408074441373~4390579910",
     "ios_app_id": "ca-app-pub-5904408074441373~4390579910"
   }
+  "android": {
+      "package": "com.voiceandcameratranslator"
+  }
 }
