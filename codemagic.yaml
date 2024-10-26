@@ -41,7 +41,7 @@ workflows:
           - duongtranduc@gmail.com
         notify:
           success: true
-          failure: true
+          failure: false
       google_play:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
         track: internal
