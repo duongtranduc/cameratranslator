@@ -8,6 +8,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AppBannerAd from '../components/ads/AppBannerAd';
 import { adUnits } from '../components/ads/adUnit';
 import { AdEventType, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
+import AppStatusBar from '../components/elements/AppStatusBar';
 
 const historyInterstitial = InterstitialAd.createForAdRequest(adUnits.inter_history_groupoftranslations, {
     requestNonPersonalizedAdsOnly: true,
@@ -34,7 +35,7 @@ const HistoryScreen = () => {
     const navigation = useNavigation<any>();
     const [languagePairs, setLanguagePairs] = useState<LanguagePair[]>([]);
     const [adLoaded, setAdLoaded] = useState(false);
-    
+
     const loadAd = useCallback(() => {
         const unsubscribeLoaded = historyInterstitial.addAdEventListener(AdEventType.LOADED, () => {
             setAdLoaded(true);
@@ -114,7 +115,7 @@ const HistoryScreen = () => {
 
     const handleLanguagePairPress = useCallback((item: LanguagePair) => () => {
         console.log('item', item);
-        
+
         if (adLoaded) {
             showAdAndNavigate(historyInterstitial, 'HistoryDetailScreen', item);
         } else {
@@ -140,6 +141,7 @@ const HistoryScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <AppStatusBar barStyle="dark-content" backgroundColor={Colors.backgroundSecondary} />
             <View style={[styles.header, { elevation: 0, backgroundColor: Colors.backgroundSecondary }]}>
                 <View style={{ position: "absolute", left: 15 }}>
                     <TouchableOpacity onPress={handleBack}>

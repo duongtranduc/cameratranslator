@@ -24,6 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AdEventType, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
 import { adUnits } from '../components/ads/adUnit';
 import ImageCropPicker from 'react-native-image-crop-picker';
+import AppStatusBar from '../components/elements/AppStatusBar';
 
 const cameraTakePhotoInterstitial = InterstitialAd.createForAdRequest(adUnits.inter_cameratranslator_takephoto, {
     requestNonPersonalizedAdsOnly: true,
@@ -297,6 +298,7 @@ const CameraTranslate: React.FC = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <AppStatusBar barStyle="dark-content" backgroundColor={'transparent'} translucent={true} />
             {!!device && (
                 <Camera
                     style={StyleSheet.absoluteFill}
@@ -335,7 +337,12 @@ const CameraTranslate: React.FC = () => {
                             style={styles.languageButton}
                             onPress={() => setModalVisible(true)}
                         >
-                            <AppText style={styles.languageButtonTitle}>
+                            <AppText style={[styles.languageButtonTitle, { flexShrink: 1, maxWidth: 200, }]}
+                                textProps={{
+                                    numberOfLines: 1,
+                                    ellipsizeMode: "tail",
+                                }}
+                            >
                                 {`${inputLanguage[0]}`}
                             </AppText>
                             <Ionicons name="chevron-down-outline" size={15} color={Colors.white} />
@@ -357,7 +364,12 @@ const CameraTranslate: React.FC = () => {
                             style={styles.languageButton}
                             onPress={() => setModalVisible2(true)}
                         >
-                            <AppText style={[styles.languageButtonTitle,]}>
+                            <AppText style={[styles.languageButtonTitle, { flexShrink: 1, maxWidth: 200, }]}
+                                textProps={{
+                                    numberOfLines: 1,
+                                    ellipsizeMode: "tail",
+                                }}
+                            >
                                 {outputLanguage[0]}
                             </AppText>
                             <Ionicons name="chevron-down-outline" size={15} color={Colors.white} />
@@ -612,7 +624,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         gap: 10,
         backgroundColor: 'rgba(0, 12, 58, 0.5)', // Using rgba for transparency
-        height: 80,
+        height: 100,
         paddingHorizontal: 20,
         paddingBottom: 5,
 

@@ -11,14 +11,15 @@ import DocumentSVG from '../assets/document.svg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppBannerAd from '../components/ads/AppBannerAd';
 import { adUnits } from '../components/ads/adUnit';
+import AppStatusBar from '../components/elements/AppStatusBar';
 const Setting: React.FC = () => {
     const navigation = useNavigation();
     const settingsOptions = [
         { title: 'Languages', icon: TranslateSVG, onPress: () => navigation.navigate('LanguageSelect' as never) },
-        { title: 'Rate Us', icon: StarSVG, onPress: () => navigation.navigate('RateUs' as never) },
-        { title: 'Share to friend', icon: ShareSVG, onPress: () => navigation.navigate('ShareToFriend' as never) },
-        { title: 'Privacy', icon: LockSVG, onPress: () => navigation.navigate('Privacy' as never) },
-        { title: 'Term of Use', icon: DocumentSVG, onPress: () => navigation.navigate('TermOfUse' as never) },
+        { title: 'Rate Us', icon: StarSVG, onPress: () => { } },
+        { title: 'Share to friend', icon: ShareSVG, onPress: () => { } },
+        { title: 'Privacy', icon: LockSVG, onPress: () => { } },
+        { title: 'Term of Use', icon: DocumentSVG, onPress: () => { } },
     ];
 
     const handleBack = () => {
@@ -26,13 +27,14 @@ const Setting: React.FC = () => {
     }
     return (
         <SafeAreaView style={styles.container}>
+            <AppStatusBar barStyle="dark-content" backgroundColor={Colors.backgroundSecondary} />
             <View style={[styles.header, { elevation: 0, backgroundColor: Colors.backgroundSecondary }]}>
                 <View style={{ position: "absolute", left: 15 }}>
                     <TouchableOpacity onPress={handleBack}>
                         <Ionicons name="arrow-back" size={24} color={Colors.text} />
                     </TouchableOpacity>
                 </View>
-                <AppText style={styles.headerText}>Conversation</AppText>
+                <AppText style={styles.headerText}>Setting</AppText>
             </View>
             <View style={{ paddingHorizontal: 20 }}>
                 {settingsOptions.map((option, index) => (

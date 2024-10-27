@@ -24,6 +24,8 @@ import MicroSVG from '../assets/microphone.svg';
 import RepeatSVG from '../assets/repeat.svg';
 import BGConversionSVG from '../assets/bg-conversation.svg';
 import PauseSVG from '../assets/pause.svg';
+import { BannerAdSize } from 'react-native-google-mobile-ads';
+import AppStatusBar from '../components/elements/AppStatusBar';
 type Message = {
     id: number;
     text: string;
@@ -45,7 +47,29 @@ const ConversationScreen = () => {
     const [selectOutputLanguage, setSelectOutputLanguage] = useState(languages[1]);
     const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
     const [search, onSearchTextChange] = React.useState("");
+    const pulseAnim = useRef(new Animated.Value(1)).current;
 
+    const startPulseAnimation = () => {
+        Animated.loop(
+            Animated.sequence([
+                Animated.timing(pulseAnim, {
+                    toValue: 1.2,
+                    duration: 500,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(pulseAnim, {
+                    toValue: 1,
+                    duration: 500,
+                    useNativeDriver: true,
+                }),
+            ])
+        ).start();
+    };
+
+    const stopPulseAnimation = () => {
+        pulseAnim.stopAnimation();
+        pulseAnim.setValue(1);
+    };
 
     const messagesContainerRef = useRef<ScrollView | null>(null);
 
@@ -221,11 +245,13 @@ const ConversationScreen = () => {
         if (isListening) {
             setIsListening(false);
             Voice.destroy().then(Voice.removeAllListeners);
+            stopPulseAnimation();
             return;
         }
 
         const speechStart = () => {
             setIsListening(true);
+            startPulseAnimation();
         };
 
         const speechEnd = () => {
@@ -300,8 +326,30 @@ const ConversationScreen = () => {
         });
     };
 
+    const AnimatedMicButton = ({ onPress = () => { }, isListening, currentUser, userNumber }: { onPress: () => void, isListening: boolean, currentUser: number, userNumber: number }) => {
+        const buttonStyle = userNumber === 1 ? styles.micButton : styles.micButtonRight;
+        
+        return (
+            <TouchableOpacity onPress={onPress}>
+                <Animated.View style={[
+                    buttonStyle,
+                    isListening && currentUser === userNumber && {
+                        transform: [{ scale: pulseAnim }],
+                    }
+                ]}>
+                    {isListening && currentUser === userNumber ? (
+                        <PauseSVG width={30} height={30} color={Colors.white} />
+                    ) : (
+                        <MicroSVG width={30} height={30} color={Colors.white} />
+                    )}
+                </Animated.View>
+            </TouchableOpacity>
+        );
+    };
+
     return (
         <SafeAreaView style={styles.container}>
+            <AppStatusBar barStyle="dark-content" backgroundColor={Colors.backgroundSecondary} />
             <View style={[styles.header, { elevation: 0, backgroundColor: Colors.backgroundSecondary }]}>
                 <View style={{ position: "absolute", left: 15 }}>
                     <TouchableOpacity onPress={handleBack}>
@@ -310,9 +358,9 @@ const ConversationScreen = () => {
                 </View>
                 <AppText style={styles.headerText}>Conversation</AppText>
             </View>
-            {/* <View style={styles.adsContainer} >
-                <AppBannerAd adUnitId={adUnits.inter_home_conversiontranslator}/>
-            </View> */}
+            <View style={styles.adsContainer} >
+                <AppBannerAd adUnitId={adUnits.native_conversation} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}/>
+            </View>
             {
                 messages?.length === 0 && (
                     <View style={styles.conversationBackgroundEmptyContainer}>
@@ -396,17 +444,12 @@ const ConversationScreen = () => {
                             </AppText>
                             <Ionicons name="chevron-down-outline" size={15} color={Colors.text} />
                         </TouchableOpacity>
-                        {
-                            !isListening ? (
-                                <TouchableOpacity style={styles.micButton} onPress={() => handleMicPressUser(1)}>
-                                    <MicroSVG width={30} height={30} color={Colors.white} />
-                                </TouchableOpacity>
-                            ) : (
-                                <TouchableOpacity style={styles.micButton} onPress={() => handleMicPressUser(1)}>
-                                    <PauseSVG width={30} height={30} color={Colors.white} />
-                                </TouchableOpacity>
-                            )
-                        }
+                        <AnimatedMicButton
+                            onPress={() => handleMicPressUser(1)}
+                            isListening={isListening}
+                            currentUser={currentUser}
+                            userNumber={1}
+                        />
                     </View>
                     <View style={{ paddingTop: 12 }}>
                         <TouchableOpacity onPress={switchLanguages} style={styles.switchButton}>
@@ -430,17 +473,12 @@ const ConversationScreen = () => {
                             </AppText>
                             <Ionicons name="chevron-down-outline" size={15} color={Colors.text} />
                         </TouchableOpacity>
-                        {
-                            !isListening ? (
-                                <TouchableOpacity style={styles.micButtonRight} onPress={() => handleMicPressUser(2)}>
-                                    <MicroSVG width={30} height={30} color={Colors.white} />
-                                </TouchableOpacity>
-                            ) : (
-                                <TouchableOpacity style={styles.micButtonRight} onPress={() => handleMicPressUser(2)}>
-                                    <PauseSVG width={30} height={30} color={Colors.white} />
-                                </TouchableOpacity>
-                            )
-                        }
+                        <AnimatedMicButton
+                            onPress={() => handleMicPressUser(2)}
+                            isListening={isListening}
+                            currentUser={currentUser}
+                            userNumber={2}
+                        />
                     </View>
                 </View>
             </View>
@@ -679,8 +717,6 @@ const styles = StyleSheet.create({
     },
     adsContainer: {
         backgroundColor: Colors.white,
-        borderRadius: 12,
-        marginBottom: 20,
     },
     messagesContainer: {
         flex: 1,
@@ -881,3 +917,4 @@ const styles = StyleSheet.create({
 });
 
 export default ConversationScreen;      
+

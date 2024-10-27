@@ -7,6 +7,7 @@ import AppText, { FONT_FAMILY } from '../components/elements/AppText';
 import { adUnits } from '../components/ads/adUnit';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppStatusBar from '../components/elements/AppStatusBar';
 
 interface Slide {
     key: number;
@@ -147,6 +148,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <AppStatusBar barStyle="dark-content" backgroundColor={Colors.primary} />
             <AppIntroSlider
                 renderItem={renderItem}
                 data={slides}
@@ -158,7 +160,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ navigation }) => {
                 dotStyle={{ backgroundColor: "#C0C4D1" }}
                 onSlideChange={onSlideChange}
             />
-            <View style={{ marginTop: 15, width: '100%', alignItems: 'center' }}>           
+            <View style={{  width: '100%', alignItems: 'center', backgroundColor: '#F0F3F6' }}>           
                 {adUnitId && <AppBannerAd adUnitId={adUnitId}   />}
             </View>
         </SafeAreaView>
@@ -168,7 +170,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.primary,
     },
     slide: {
         flex: 1,

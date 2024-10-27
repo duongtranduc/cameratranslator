@@ -1,7 +1,7 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StatusBar } from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -18,6 +18,7 @@ import HistoryScreen from './src/screens/HistoryScreen';
 import HistoryDetailScreen from './src/screens/HistoryDetailScreen';
 import CameraTranslate from './src/screens/CameraTranslate';
 import CameraTranslateResultScreen from './src/screens/CameraTranslateResult';
+import { Colors } from './src/configs/colors';
 
 
 const Stack = createNativeStackNavigator();
@@ -54,6 +55,7 @@ function App() {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
+            contentStyle: { backgroundColor: Colors.background },
           }}
           initialRouteName={initialRoute}
         // initialRouteName="LanguageSelect"

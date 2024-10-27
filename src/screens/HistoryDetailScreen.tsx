@@ -8,6 +8,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import AppBannerAd from '../components/ads/AppBannerAd';
 import { adUnits } from '../components/ads/adUnit';
 import TrashSVG from '../assets/trash-2.svg';
+import AppStatusBar from '../components/elements/AppStatusBar';
 type HistoryItem = {
     id: number;
     inputText: string;
@@ -22,8 +23,8 @@ const HistoryDetailScreen = () => {
     const route = useRoute<any>();
     const { languagePair } = route.params;
     const [history, setHistory] = useState<HistoryItem[]>([]);
-    const [expandedItems, setExpandedItems] = useState<{[key: number]: boolean}>({});
-    
+    const [expandedItems, setExpandedItems] = useState<{ [key: number]: boolean }>({});
+
     useEffect(() => {
         loadHistory();
     }, []);
@@ -34,8 +35,8 @@ const HistoryDetailScreen = () => {
             if (historyData) {
                 const allHistory: HistoryItem[] = JSON.parse(historyData);
                 const filteredHistory = allHistory.filter(
-                    item => item.inputLanguage === languagePair.inputLanguage && 
-                            item.outputLanguage === languagePair.outputLanguage
+                    item => item.inputLanguage === languagePair.inputLanguage &&
+                        item.outputLanguage === languagePair.outputLanguage
                 );
                 setHistory(filteredHistory);
             }
@@ -56,7 +57,7 @@ const HistoryDetailScreen = () => {
                 let allHistory: HistoryItem[] = JSON.parse(historyData);
                 allHistory = allHistory.filter(item => item.id !== id);
                 await AsyncStorage.setItem('translationHistory', JSON.stringify(allHistory));
-                
+
                 // Update the local state
                 setHistory(history.filter(item => item.id !== id));
             }
@@ -77,20 +78,20 @@ const HistoryDetailScreen = () => {
         <TouchableOpacity onPress={() => toggleExpand(item.id)}>
             <View style={styles.historyItem}>
                 <View style={styles.textContainer}>
-                    <AppText 
-                        style={styles.translationText} 
-                        textProps={{numberOfLines: expandedItems[item.id] ? undefined : 1}}
+                    <AppText
+                        style={styles.translationText}
+                        textProps={{ numberOfLines: expandedItems[item.id] ? undefined : 1 }}
                     >
                         {item.inputText}
                     </AppText>
-                    <AppText 
-                        style={styles.outputText} 
-                        textProps={{numberOfLines: expandedItems[item.id] ? undefined : 1}}
+                    <AppText
+                        style={styles.outputText}
+                        textProps={{ numberOfLines: expandedItems[item.id] ? undefined : 1 }}
                     >
                         {item.outputText}
                     </AppText>
                 </View>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.deleteButton}
                     onPress={() => deleteHistoryItem(item.id)}
                 >
@@ -102,6 +103,7 @@ const HistoryDetailScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <AppStatusBar barStyle="dark-content" backgroundColor={Colors.backgroundSecondary} />
             <View style={[styles.header, { elevation: 0, backgroundColor: Colors.backgroundSecondary }]}>
                 <View style={{ position: "absolute", left: 5 }}>
                     <TouchableOpacity onPress={handleBack}>
@@ -128,6 +130,7 @@ const HistoryDetailScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.backgroundSecondary,
     },
     header: {
         height: 50,
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         borderRadius: 10,
         padding: 15,
-        marginBottom: 10,
+        marginBottom: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -174,7 +177,7 @@ const styles = StyleSheet.create({
     deleteButton: {
         padding: 5,
     },
-    
+
 });
 
 export default HistoryDetailScreen;

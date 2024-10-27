@@ -11,14 +11,14 @@ interface AppButtonProps {
   disabled?: boolean;
 }
 
-const AppButton: React.FC<AppButtonProps> = ({ title, onPress, style, textStyle , disabled = false }) => {
+const AppButton: React.FC<AppButtonProps> = ({ title, onPress, style, textStyle, disabled = false }) => {
   return (
     <TouchableOpacity
       style={[styles.button, style, disabled && styles.disabledButton]}
       onPress={onPress}
       disabled={disabled}
     >
-      <AppText style={[styles.buttonText, textStyle]}>{title}</AppText>
+      <AppText style={[styles.buttonText, textStyle]} textProps={{ numberOfLines: 1 }}>{title}</AppText>
     </TouchableOpacity>
   );
 };
@@ -31,11 +31,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   buttonText: {
     color: Colors.background,
     fontSize: 16,
     fontFamily: FONT_FAMILY.BOLD,
+    textAlign: 'center',
   },
   disabledButton: {
     backgroundColor: Colors.border,

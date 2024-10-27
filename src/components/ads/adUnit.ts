@@ -1,5 +1,5 @@
 import { TestIds } from 'react-native-google-mobile-ads';
-const __DEV__ = true;
+// const __DEV__ = true;
 export const adUnits = {
     inter_splash: __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-5904408074441373/3875574591',
     native_language: __DEV__ ? TestIds.BANNER : 'ca-app-pub-5904408074441373/9333482079',
@@ -26,4 +26,5 @@ export const adUnits = {
     inter_cameratranslator_selectphoto: __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-5904408074441373/1535248061',
     native_cameratranslator_translate: __DEV__ ? TestIds.BANNER : 'ca-app-pub-5904408074441373/2669136841',
     inter_history_groupoftranslations: __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-5904408074441373/6009616059',
+    native_conversation: __DEV__ ? TestIds.BANNER : 'ca-app-pub-5904408074441373/8255830399',
 };

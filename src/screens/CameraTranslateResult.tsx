@@ -19,6 +19,7 @@ import { adUnits } from "../components/ads/adUnit";
 import MicroSVG from '../assets/microphone.svg';
 import CopySVG from '../assets/copy.svg';
 import RepeatSVG from '../assets/repeat.svg';
+import AppStatusBar from "../components/elements/AppStatusBar";
 const transliterate = (word: string): string => {
     let answer = "";
     const a: { [key: string]: string } = {
@@ -463,6 +464,7 @@ export default function TranslateScreen({ route }: { route: any }) {
         <SafeAreaView
             style={styles.container}
         >
+            <AppStatusBar barStyle="dark-content" backgroundColor={Colors.backgroundSecondary} />
             <View style={{ backgroundColor: Colors.backgroundSecondary, height: "100%" }}>
                 <View style={[styles.header, { elevation: 0, backgroundColor: Colors.backgroundSecondary }]}>
                     <View style={{ position: "absolute", left: 5 }}>

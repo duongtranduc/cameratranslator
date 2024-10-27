@@ -7,10 +7,11 @@ import AppButton from '../components/elements/AppButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppBannerAd from '../components/ads/AppBannerAd';
 import { Platform } from 'react-native';
-import { AdEventType, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
+import { AdEventType, BannerAdSize, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
 import { adUnits } from '../components/ads/adUnit';
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import SettingIcon from '../assets/setting-2.svg';
+import AppStatusBar from '../components/elements/AppStatusBar';
 
 // Sử dụng Test ID hoặc adUnitId thật nếu đã có
 const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
@@ -215,6 +216,7 @@ const HomeScreen: React.FC = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <AppStatusBar barStyle="dark-content" backgroundColor={Colors.backgroundSecondary} />
             <ScrollView >
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
@@ -229,7 +231,7 @@ const HomeScreen: React.FC = () => {
                     </View>
                 </View>
                 <View style={styles.adContainer}>
-                    <AppBannerAd adUnitId={adUnits.native_home} />
+                    <AppBannerAd adUnitId={adUnits.native_home} size={BannerAdSize.LARGE_BANNER} />
                 </View>
                 <View style={styles.cardVoiceTranslator} >
                     <View style={styles.cardVoiceTranslatorHeader}>

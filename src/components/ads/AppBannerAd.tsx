@@ -5,9 +5,10 @@ import { Colors } from '../../configs/colors';
 
 interface AppBannerAdProps {
   adUnitId?: string;
+  size?: BannerAdSize | string;
 }
 
-const AppBannerAd: React.FC<AppBannerAdProps> = ({ adUnitId = TestIds.ADAPTIVE_BANNER }) => {
+const AppBannerAd: React.FC<AppBannerAdProps> = ({ adUnitId = TestIds.ADAPTIVE_BANNER, size = BannerAdSize.LARGE_BANNER }) => {
 
   const bannerRef = useRef<BannerAd>(null);
 
@@ -19,7 +20,7 @@ const AppBannerAd: React.FC<AppBannerAdProps> = ({ adUnitId = TestIds.ADAPTIVE_B
     <BannerAd
       ref={bannerRef}
       unitId={adUnitId}
-      size={BannerAdSize.LARGE_BANNER}
+      size={size}
       requestOptions={{
         requestNonPersonalizedAdsOnly: true,
       }}

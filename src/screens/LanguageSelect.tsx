@@ -14,6 +14,8 @@ import ID_SVG from '../assets/id-flag.svg';
 import HI_SVG from '../assets/hi-flag.svg';
 import DE_SVG from '../assets/de-flag.svg';
 import { SvgProps } from 'react-native-svg';
+import AppStatusBar from '../components/elements/AppStatusBar';
+import { BannerAdSize } from 'react-native-google-mobile-ads';
 
 type Language = [string, string] | [string, string, React.FC<SvgProps>];
 
@@ -88,6 +90,8 @@ const LanguageSelect: React.FC = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <AppStatusBar barStyle="dark-content" backgroundColor={Colors.backgroundSecondary} />
+
             {/* <Appbar.Header>
                 <Appbar.BackAction onPress={() => navigation.goBack()} />
                 <Appbar.Content title="Select Language" />
@@ -120,8 +124,8 @@ const LanguageSelect: React.FC = () => {
                 /> */}
                 {
                     currentLanguage[1] !== 'auto' ?
-                        <AppBannerAd adUnitId={adUnits.native_language_selected} /> :
-                        <AppBannerAd adUnitId={adUnits.native_language} />
+                        <AppBannerAd adUnitId={adUnits.native_language_selected} size={BannerAdSize.LARGE_BANNER} /> :
+                        <AppBannerAd adUnitId={adUnits.native_language} size={BannerAdSize.LARGE_BANNER} />
                 }
             </View>
         </SafeAreaView>
@@ -213,6 +217,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        
     },
     button: {
         margin: 16,
